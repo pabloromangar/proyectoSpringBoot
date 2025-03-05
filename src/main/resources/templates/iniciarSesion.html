@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<div class="overlay"></div>
+    <form action="/iniciarSesion" method="POST">
+		<h1>Iniciar sesión</h1>
+
+       <input type="text" name="username" placeholder="Nombre de usuario" th:value="${username}" required> <br><br>
+       <input type="password" name="password" placeholder="Contraseña" th:value="${password}" required><br><br>
+	   <p th:text="${error}" style="color: red;"></p>
+
+	   <input type="submit" class="enviar" value="Iniciar sesion"><br><br>
+
+	   <p>¿No tienes cuenta? Crea una <a href="/nuevoUsuario">aquí</a></p>
+
+       </form>
+<style>
+		    *, *::before, *::after {
+		        margin: 0;
+		        padding: 0;
+		        box-sizing: border-box;
+		    }
+
+		    html{
+		        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		    }
+
+		    h1 {
+		        text-align: center;
+		        margin-bottom: 20px;
+		    }
+
+		    form {
+		        width: 350px;
+		        margin: 0 auto;
+				background-color: rgba(255, 255, 255, 0.89);
+		        padding: 40px;
+		        border-radius: 20px;
+				z-index: 100;
+		    }
+
+		    label {
+		        font-size: 1.2em;
+		    }
+
+		    input, textarea {
+		        width: 100%;
+		        padding: 10px;
+		        margin: 10px 0;
+		    }
+
+		    textarea {
+		        resize: none;
+		        height: 140px;
+		    }
+
+		    button {
+		        padding: 10px;
+		        background-color: #007bff;
+		        color: white;
+		        border: none;
+		        cursor: pointer;
+		    }
+
+		    body{
+		        height: 100vh;
+		        display: flex;
+		        justify-content: center;
+		        align-items: center;
+				
+		    }
+			
+			.overlay{
+				background-color: #e5e5f7;
+				opacity: 0.8;
+				background-image:  linear-gradient(30deg, #5A74BC 12%, transparent 12.5%, transparent 87%, #5A74BC 87.5%, #5A74BC), linear-gradient(150deg, #5A74BC 12%, transparent 12.5%, transparent 87%, #5A74BC 87.5%, #5A74BC), linear-gradient(30deg, #5A74BC 12%, transparent 12.5%, transparent 87%, #5A74BC 87.5%, #5A74BC), linear-gradient(150deg, #5A74BC 12%, transparent 12.5%, transparent 87%, #5A74BC 87.5%, #5A74BC), linear-gradient(60deg, #5A74BC77 25%, transparent 25.5%, transparent 75%, #5A74BC77 75%, #5A74BC77), linear-gradient(60deg, #5A74BC77 25%, transparent 25.5%, transparent 75%, #5A74BC77 75%, #5A74BC77);
+				background-size: 20px 35px;
+				background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
+								position: absolute;
+								width: 100%;
+								height:100%;
+								display: block;
+			}
+			
+			
+
+		    .enviar{
+		        background-color: #007bff;
+		        color: white;
+		        border: none;
+		        padding: 10px;
+		        cursor: pointer;
+		        transition: color 1.5s ease;
+		        width: 100%;
+		    }
+
+		   .enviar:hover{
+		        background-color: white;
+		        color: blue;
+		    }
+			
+			p{
+                text-align: center;
+            }
+		</style> 
+</body>
+</html>

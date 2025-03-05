@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div class="overlay"></div>
+	<header class="header">
+		<h1>Mis Notas</h1>
+		<a href="/cerrarSesion" class="close">Cerrar Sesión</a>
+	</header>
+
+	<form action="/nuevaNota" method="GET" id="formulario">
+		<div>
+			<label for="titulo">Título:</label>
+			<input type="text" id="titulo" name="titulo" placeholder="Título de la nota" required>
+		</div>
+		<br>
+		<div>
+			<label for="nota">Contenido:</label>
+			<textarea id="nota" name="nota" placeholder="Escribe tu nota aquí..." required></textarea>
+		</div>
+		<br>
+		<input type="submit" value="Guardar Nota">
+	</form>
+
+	<form action="/filtrar" method="GET" class="formulario-filtro">
+		<fieldset>
+			<legend>Filtrar notas por fecha</legend>
+			<div class="radio-group">
+				<label class="radio-label">
+					<input type="radio" name="filtro" value="ultima_hora"> Última hora
+				</label>
+				<label class="radio-label">
+					<input type="radio" name="filtro" value="ultimo_dia"> Último día
+				</label>
+				<label class="radio-label">
+					<input type="radio" name="filtro" value="ultima_semana"> Última semana
+				</label>
+				<label class="radio-label">
+					<input type="radio" name="filtro" value="ultimo_mes"> Último mes
+				</label>
+				<label class="radio-label">
+					<input type="radio" name="filtro" value="todos" checked> Mostrar todos
+				</label>
+			</div>
+		</fieldset>
+		<button type="submit" class="btn-filtrar">Filtrar</button>
+	</form>
+	
+	
+	
+	<div th:each="nota : ${session.notas}" class="nota">
+		<h2 th:text="${nota.titulo}"></h2>
+		<p th:text="${nota.nota}"></p>
+		<p><strong>Usuario:</strong> <span th:text="${nota.username}"></span></p>
+		<p><strong>Fecha de creación:</strong> <span th:text="${nota.fecha}"></span></p>
+		<div>
+			<a th:href="@{/borrarNota(id=${nota.id})}" class="option">Borrar Nota</a>
+			<a th:href="@{/editar(id=${nota.id})}" class="option">Editar Nota</a>
+		</div>
+	</div>
+
+	
+	<style>
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: Arial, sans-serif;
+		}
+
+		h1 {
+			text-align: center;
+			color: white;
+		}
+
+		.header {
+			width: 100%;
+			position: sticky;
+			top: 0;
+			background-color: #5A74BC;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 20px;
+		}
+
+
+		.overlay {
+			display: block;
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+			background-color: #e5e5f7;
+			opacity: 0.8;
+			background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #e5e5f7 10px), repeating-linear-gradient(#5A74BC55, #5A74BC);
+		}
+
+		.close {
+			position: absolute;
+			left: 0;
+			color: white;
+			margin: 10px;
+			text-decoration: none;
+			background-color: #869BD6;
+			padding: 8px;
+			border-radius: 5px;
+		}
+
+		.option {
+			text-decoration: none;
+			color: white;
+			background-color: #5A74BC;
+			padding: 8px;
+			border-radius: 5px;
+		}
+
+		.nota {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			padding: 20px;
+			margin: 10px auto;
+			color: white;
+			width: 60%;
+		}
+
+		.nota:nth-child(odd) {
+			background-color: #5A74BC;
+		}
+
+		.nota:nth-child(even) {
+			background-color: #869BD6;
+		}
+
+		.nota:nth-child(odd) a {
+			background-color: #869BD6;
+		}
+
+		.nota:nth-child(even) a {
+			background-color: #5A74BC;
+		}
+
+		form {
+			background-color: #869BD6;
+			width: 768px;
+			padding: 20px;
+			margin: 20px auto;
+			border-radius: 10px;
+			color: white;
+			font-size: 1.2em;
+		}
+
+		input,
+		textarea {
+			height: 36px;
+			width: 100%;
+			margin: 10px 0;
+			padding: 5px;
+		}
+
+		textarea {
+			height: 100px;
+			resize: none;
+		}
+
+		.formulario-filtro {
+    background-color: #869BD6;
+    width: 768px;
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 10px;
+    color: white;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+fieldset {
+    border: none;
+    width: 100%;
+    text-align: center;
+}
+
+legend {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.radio-label {
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+input[type="radio"] {
+    transform: scale(0.8); /* Hace los radios más pequeños */
+}
+
+.btn-filtrar {
+    background-color: #5A74BC;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.btn-filtrar:hover {
+    background-color: #4a63a8;
+}
+
+
+	</style>
+</body>
+
+</html>
