@@ -1,14 +1,10 @@
-# Usa una imagen base de Java
-FROM openjdk:17-jdk-slim
+FROM maven:3-eclipse-temurin-17 AS build 
+WORKDIR /app 
+COPY . /app
+WORKDIR /app 
+RUN mvn clean package -DskipTests 
 
-# Define el directorio de trabajo dentro del contenedor
-WORKDIR /app
-
-# Copia el archivo JAR de tu proyecto al contenedor
-COPY target/*.jar app.jar
-
-# Expone el puerto en el que tu aplicación Spring Boot escuchará
-EXPOSE 8080
-
-# Comando para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
+FROM eclipse-temurin:17-alpine 
+WORKDIR /app 
+COPY --from=build /app/target/*.jar app.jar 
+CMD ["java", "-jar", "app.jar"]

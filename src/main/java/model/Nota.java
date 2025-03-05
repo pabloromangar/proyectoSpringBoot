@@ -18,6 +18,7 @@ public class Nota {
 	private LocalDateTime fecha;
 	private String fechaFormateada;
 
+	
 	public Nota(Integer id, String username, String titulo, String nota, LocalDateTime fecha) {
 		this.id = id;
 		this.username = username;
